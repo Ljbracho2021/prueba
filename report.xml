@@ -1,0 +1,61 @@
+<odoo>
+
+    <!-- ======================== Reporte ======================== -->
+    <!-- <record id="reporte_gb_accion_gobierno" model="ir.actions.report">
+        <field name="name">Listado de Acciones</field>
+        <field name="model">gb.accion.gobierno</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">gestion_gobierno.reporte_gb_accion_gobierno_template</field>
+        <field name="report_file">gestion_gobierno.reporte_gb_accion_gobierno_template</field>
+    </record>-->
+
+    <record id="report_clap_details" model="ir.actions.report">
+        <field name="name">Ficha Clap</field>
+        <field name="model">sala.clap</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_sala.report_clap_details</field>
+        <field name="report_file">it_sala.report_clap_details</field>
+        <field name="binding_model_id" ref="model_sala_clap"/>
+        <field name="binding_type">report</field>
+    </record>
+ 
+    <record id="report_persona_details" model="ir.actions.report">
+        <field name="name">Ficha</field>
+        <field name="model">sala.persona</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_sala.report_persona_details</field>
+        <field name="report_file">it_sala.report_persona_details</field>
+        <field name="binding_model_id" ref="model_sala_persona"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_persona_list" model="ir.actions.report">
+        <field name="name">Lista</field>
+        <field name="model">sala.persona</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_sala.report_persona_list</field>
+        <field name="report_file">it_sala.report_persona_list</field>
+        <field name="binding_model_id" ref="model_sala_persona"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_caso_details" model="ir.actions.report">
+        <field name="name">Ficha Caso</field>
+        <field name="model">sala.caso</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_sala.report_caso_details</field>
+        <field name="report_file">it_sala.report_caso_details</field>
+        <field name="binding_model_id" ref="model_sala_caso"/>
+        <field name="binding_type">report</field>
+    </record> 
+
+    <record id="report_comuna_details" model="ir.actions.report">
+        <field name="name">Ficha</field>
+        <field name="model">sala.comuna</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">it_sala.report_comuna_details</field>
+        <field name="report_file">it_sala.report_comuna_details</field>
+        <field name="binding_model_id" ref="model_sala_comuna"/>
+        <field name="binding_type">report</field>
+    </record>    
+</odoo>
