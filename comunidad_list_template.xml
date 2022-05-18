@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_comunidad_list">
+        <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+ 
+                        <div class="page">
+                            <h2 class="text-center"> <span style="font-size: 18px;">DIRECCIÓN DEL PODER POPULAR - SALA SITUACIONAL INTEGRAL - MUNICIPIO PAEZ </span> </h2>
+                            <h2 class="text-center"> <span style="font-size: 14px;"> LISTADO DE COMUNIDADES </span> </h2>
+                        
+                            <div class="oe_structure">
+                                   
+                                    <table class="table table-sm o_main_table" name="tab1">
+                                        <thead>
+                                            <tr> 
+                                                <th name="th_reference" class="text-center"> <span>#</span> </th>
+                                                <th name="th_reference" class="text-center"> <span>Nombre</span> </th>
+                                                <th name="th_reference" class="text-center"> <span>Parroquia</span> </th>                                               
+                                                <th name="th_age" class="text-center"> <span>Comuna</span> </th>
+                                            </tr>
+                                        </thead>
+                                        <t t-set="contador" t-value="0"/>
+                                        <t t-foreach="docs" t-as="modelo">
+
+                                          <tr>
+                                             <t t-set="contador" t-value="contador+1"/>
+
+                                             <td class="text-right">  <t t-esc="contador"/> </td >
+                                             <td class="text-left"> <span t-field="modelo.nombre"/> </td>
+                                             <td class="text-left"> <span t-field="modelo.parroquia_id"/> </td>
+                                             <td class="text-left"> <span t-field="modelo.comuna_id"/> </td>
+                                          </tr>
+                                       </t>
+                                    </table>
+                                    
+                            </div>
+                        </div>
+                        <div class="footer o_standard_footer" style="border-top: 1px solid black;">
+                            <div class="row text-center">
+                                <div class="col col-12 text-center">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">Plataforma SIDGE - Direcciòn de Polìticas de Innovaciòn Digital (Página:</li>
+                                        <li class="list-inline-item">
+                                            <span class="page"/>
+                                        </li>
+                                        <li class="list-inline-item">/</li>
+                                        <li class="list-inline-item">
+                                            <span class="topage"/>)
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                </t>
+        </t>
+    </template>
+</odoo>
