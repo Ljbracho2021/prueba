@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_comunidad_details">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+
+                <t t-call="web.external_layout">
+                   <div class="page">
+                            <h2 class="text-center"> <span style="font-size: 18px;">DIRECCIÓN DEL PODER POPULAR - SALA SITUACIONAL INTEGRAL - MUNICIPIO PAEZ </span> </h2>
+                            <h2 class="text-center"> <span style="font-size: 14px;"> COMUNiDAD </span> </h2>
+                            <h2 class="text-center"> <span style="font-size: 18px;"> <span t-field="o.nombre"/> </span> </h2>
+                        <div class="oe_structure"/>
+                                  <table class="table table-condensed" style="border: 1px solid black ;">
+                                        <tr>
+                                            <td width="40%">
+                                                <p style="text-align:center;padding-top:10px;">
+                                                    <img t-if="not o.image"
+                                                        t-att-src="'/web/static/src/img/placeholder.png'" height="140"
+                                                        border="1" width="120"/>
+                                                    <img t-if="o.image"
+                                                        t-att-src="'data:image/png;base64,%s' % to_text(o.image)"
+                                                        height="140" border="1" width="120"/>
+                                                </p>
+                                            </td>
+                                            
+                                            <td width="60%">
+                                                <table>
+                                                   
+                                                    <tr>
+                                                        <td >
+                                                            <span>
+                                                                <strong>Estado:</strong> <span t-field="o.estado_id"/>
+                                                            </span>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>
+                                                                <strong>Municipio:</strong> <span t-field="o.municipio_id"/>
+                                                            </span>
+                                                        </td>
+                                                       
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>
+                                                                <strong>Parroquia:</strong> <span t-field="o.parroquia_id"/>
+                                                            </span>
+                                                        </td>
+                                                       
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>
+                                                                <strong>Comuna:</strong> <span t-field="o.comuna_id"/>
+                                                            </span>
+                                                        </td>
+                                                       
+                                                    </tr>
+                                                    
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                            <table class="table table-sm o_main_table" name="appointment">
+                                            <thead>
+                                                    <tr> <th colspan="2" class="text-center">LÍMITES</th> </tr>
+                                            </thead>
+    
+                                                <tr>
+                                                    <td > Norte </td>
+                                                    <td> <span t-field="o.limite_n"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td > Sur</td>
+                                                    <td> <span t-field="o.limite_s"/> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td > Este </td>
+                                                    <td> <span t-field="o.limite_e"/> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td > Oeste</td>
+                                                    <td> <span t-field="o.limite_o"/> </td>
+                                                </tr>
+                            </table>
+                            <table class="table table-sm o_main_table" name="appointment">
+                                        <thead>
+                                                <tr> <th colspan="2" class="text-center">DATOS DEMOGRÁFICOS</th> </tr>
+                                        </thead>
+ 
+                                            <tr>
+                                                <td > Habitantes </td>
+                                                <td> <span t-field="o.habita_conta"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td > Familias</td>
+                                                <td> <span t-field="o.familia_conta"/> </td>
+                                            </tr>
+                                            <tr>
+                                                <td > Viviendas </td>
+                                                <td> <span t-field="o.casa_conta"/> </td>
+                                            </tr>
+                            </table>
+                            <t t-if="o.calle_ids">
+                                    <div class="text-center">
+                                        <span> <strong > CALLES </strong> </span> 
+                                    </div>                        
+                
+                                    <table class="table table-sm o_main_table" name="appointment">
+                                        <thead>
+                                            <tr>
+                                                <th name="th_reference" class="text-center"> <span>#</span> </th>
+                                                <th name="th_reference" class="text-center">   <span>Nombre</span> </th>
+                                                <th name="th_reference" class="text-center">   <span>Nro. Habitantes</span> </th>
+                                                <th name="th_reference" class="text-center">   <span>Nro. Familias</span> </th>
+                                                <th name="th_reference" class="text-center">   <span>Nro. Acciones</span> </th>                        
+                                            </tr>
+                                        </thead>
+                                        <t t-set="contador" t-value="0"/>
+                                        <t t-foreach="o.calle_ids" t-as="line">
+                                            <t t-set="contador" t-value="contador + 1"/>
+                                            <tr>
+                                                <td class="text-right"> <t t-esc="contador"/> </td >
+                                                <td> <span t-field="line.nombre"/> </td>
+                                                <td class="text-right"> <span t-field="line.habita_count"/> </td>
+
+                                                <!-- <td class="text-right"> <span t-field="line.familia_conta"/> </td>
+                                                <td class="text-right"> <span t-field="line.accion_conta"/> </td>  -->
+                                            </tr>
+                                        </t>
+                                    </table>
+                                </t>
+
+                            <t t-if="o.accion_ids">
+                            <div class="text-center">
+                                <span> <strong > ACCIONES DE GOBIERNO </strong> </span> 
+                            </div>                        
+        
+                                <table class="table table-sm o_main_table" name="appointment">
+                                    <thead>
+                                        <tr>
+                                            <th name="th_reference" class="text-center"> <span>#</span> </th>
+                                            <th name="th_reference" class="text-center"> <span>Nombre</span> </th>
+                                            <th name="th_reference" class="text-center"> <span>Acción</span> </th>
+                                            <th name="th_reference" class="text-center"> <span>Dirigida a:</span> </th> 
+                                            <th name="th_fecha" class="text-center">     <span>Fecha apertura</span> </th>
+                                            <th name="th_fechac" class="text-center">    <span>Fecha cierre</span> </th>
+                                            <th name="th_state" class="text-center">     <span>Status</span> </th>
+                                        </tr>
+                                    </thead>
+                                    <t t-set="contador" t-value="0"/>
+                                    <t t-foreach="o.accion_ids" t-as="line">
+                                        <t t-set="contador" t-value="contador + 1"/>
+                                        <tr>
+                                            <td class="text-right"> <t t-esc="contador"/> </td > 
+                                            <td> <span t-field="line.nombre"/> </td>
+                                            <td> <span t-field="line.accion_id"/> </td>
+                                            <t t-if="line.activo_id">  <td> <span t-field="line.activo_id"/>  </td> </t>
+                                            <t t-if="line.persona_id"> <td> <span t-field="line.persona_id"/> </td> </t>
+                                            <td> <span t-field="line.date_apertura"/> </td>
+                                            <td> <span t-field="line.date_cierre"/>   </td>
+                                            <td> <span t-field="line.state"/> </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </t>
+ 
+                        <div class="text-center">
+                             <span> <strong > INTENCIÓN DE VOTOS </strong> </span> 
+                        </div>                        
+    
+                            <table class="table table-sm o_main_table" name="appointment">
+                                    <thead>
+                                        <tr>
+                                            <th name="th_reference" class="text-center"> <span>Intenciòn</span> </th>
+                                            <th name="th_reference" class="text-center"> <span>Cantidad Votos</span> </th>
+                                            <th name="th_age" class="text-center"> <span>Poblaciòn</span> </th>
+                                            <th name="th_age" class="text-center"> <span>%</span> </th>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <td> DUROS </td>
+                                        <td class="text-right"> <span t-field="o.vd_conta"/> </td>
+                                        <td class="text-right"> <span t-field="o.habita_conta"/> </td>
+                                        <td class="text-right"> <span t-field="o.vd_porc"/> </td>
+                                    </tr>
+                                    <tr>
+                                        <td> BLANDO </td>
+                                        <td class="text-right"> <span t-field="o.vb_conta"/> </td>
+                                        <td class="text-right"> <span t-field="o.habita_conta"/> </td>
+                                        <td class="text-right"> <span t-field="o.vb_porc"/> </td>
+                                    </tr>
+                                    <tr>
+                                        <td> OPOSITOR </td>
+                                        <td class="text-right"> <span t-field="o.vo_conta"/> </td>
+                                        <td class="text-right"> <span t-field="o.habita_conta"/> </td>
+                                        <td class="text-right"> <span t-field="o.vo_porc"/> </td>
+                                    </tr>
+                             </table>
+                        
+                    </div>
+                    <div class="footer o_standard_footer" style="border-top: 1px solid black;">
+                            <div class="row text-center">
+                                <div class="col col-12 text-center">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">Direcciòn de Polìticas de Innovaciòn Digital - Plataforma SIDGEM - (Página:</li>
+                                        <li class="list-inline-item">
+                                            <span class="page"/>
+                                        </li> 
+                                        <li class="list-inline-item">/</li>
+                                        <li class="list-inline-item">
+                                            <span class="topage"/>)
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
