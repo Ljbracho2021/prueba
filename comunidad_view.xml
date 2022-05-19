@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_comunidad_tree" model="ir.ui.view">
+        <field name="name">sala.comunidad.tree</field>
+        <field name="model">sala.comunidad</field>
+        <field name="arch" type="xml">
+            <tree sample="1">
+                 <field name="nombre"/>
+                 <field name="territorio_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- VISTA - TARJETAS - KANBAN  -->
+    <record id="view_comunidad_kanban" model="ir.ui.view">
+        <field name="name">sala.comunidad.kanban</field>
+        <field name="model">sala.comunidad</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" sample="1">
+                <field name="nombre"/>
+ 
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <div class="o_kanban_image mr-1">
+                                    <field name="image" widget="image" class="oe_avatar"/>
+                                </div>
+
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top mb-0">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title">
+                                                <field name="nombre"/>
+                                            </strong>
+                                        </div>
+                                        <field name="priority" widget="priority"/>
+                                    </div>
+                                    <t t-if="record.nombre.value"><field name="comuna_id"/></t>
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            Nro. de habitantes (<field name="habita_count"/>)
+                                        </strong>
+                                    </div>
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            Acciones de gobierno (<field name="accion_count"/>)
+                                        </strong>
+                                    </div>
+                                 </div>
+                           </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_comunidad_filter" model="ir.ui.view">
+        <field name="name">sala.comunidad</field>
+        <field name="model">sala.comunidad</field>
+        <field name="priority" eval="15" />
+        <field name="arch" type="xml">
+            <search string="Busqueda Comunas">
+                    <field name="comuna_id"/>
+                    <field name="nombre"/>
+            </search>
+        </field>
+    </record>
+
+   <!-- VISTA - ACTION  -->
+   <record id="action_open_accion" model="ir.actions.act_window">
+        <field name="name">Casos</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sala.acciong</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('comunidad_id','=', active_id)]</field>
+        <field name="context">{'default_comunidad_id': active_id}</field>        
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primera Accion de gobierno !
+            </p>
+        </field>
+    </record>
+   <record id="action_open_calle" model="ir.actions.act_window">
+        <field name="name">Calles</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sala.calle</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('comunidad_id','=', active_id)]</field>
+        <field name="context">{'default_comunidad_id': active_id}</field>        
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primera Calle !
+            </p>
+        </field>
+    </record>
+
+    <record id="action_open_casa" model="ir.actions.act_window">
+        <field name="name">Casas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sala.casa</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('comuna_id','=', active_id)]</field>
+        <field name="context">{'default_comuna_id': active_id}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primera Casa !
+            </p>
+        </field>
+    </record>
+
+    <record id="action_open_familia" model="ir.actions.act_window">
+        <field name="name">Familias</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sala.familia</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('comuna_id','=', active_id)]</field>
+        <field name="context">{'default_comuna_id': active_id}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primera Familia !
+            </p>
+        </field>
+    </record>
+
+    <record id="action_open_persona" model="ir.actions.act_window">
+        <field name="name">Habitantes</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sala.persona</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('comuna_id','=', active_id)]</field>
+        <field name="context">{'default_comuna_id': active_id}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primera Persona !
+            </p>
+        </field>
+    </record>
+
+    <record id="view_comunidad_form" model="ir.ui.view">
+        <field name="name">sala.comunidad.form</field>
+        <field name="model">sala.comunidad</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+ 
+                    <div class="oe_button_box" name="button_box">
+                                   <table class="table table-sm o_main_table" name="appointment">
+                          <tr>
+                                <td class="text-left" style="color:blue;"> <span class="fa fa-lg fa-user-plus"> </span> </td>
+                                <td class="text-left" style="color:gray;"> <span > <strong>COMUNIDAD</strong> </span> </td>
+                          <td>
+                                    <button name="%(it_sala.action_open_accion)d" type="action"
+                                                        class="oe_stat_button" icon="fa-gears"
+                                                        context="{'search_default_comunidad_id': active_id, 'default_comunidad_id': active_id, 'group_expand': True}">
+                                                    <div class="o_stat_info">
+                                                        <field name="accion_count" class="o_stat_value"/>
+                                                        <span class="o_stat_text">Acciones </span>
+                                                    </div>
+                                    </button>
+                                    <button name="%(it_sala.action_open_calle)d" type="action"
+                                            class="oe_stat_button" icon="fa-street-view"
+                                            context="{'search_default_comunidad_id': active_id, 'default_comunidad_id': active_id, 'group_expand': True}">
+                                        <div class="o_stat_info">
+                                            <field name="calle_count" class="o_stat_value"/>
+                                            <span class="o_stat_text">Calles</span>
+                                        </div>
+                                    </button>
+                                    <button name="%(it_sala.action_open_casa)d" type="action"
+                                                        class="oe_stat_button" icon="fa-home"
+                                                        context="{'search_default_comuna_id': active_id, 'default_comuna_id': active_id, 'group_expand': True}">
+                                                    <div class="o_stat_info">
+                                                        <field name="casa_count" class="o_stat_value"/>
+                                                        <span class="o_stat_text">Casas</span>
+                                                    </div>
+                                    </button>
+                                    <button name="%(it_sala.action_open_familia)d" type="action"
+                                            class="oe_stat_button" icon="fa-users"
+                                            context="{'search_default_comuna_id': active_id, 'default_comuna_id': active_id, 'group_expand': True}">
+                                        <div class="o_stat_info">
+                                            <field name="familia_count" class="o_stat_value"/>
+                                            <span class="o_stat_text">Familias</span>
+                                        </div>
+                                    </button>
+                                    <button name="%(it_sala.action_open_persona)d" type="action"
+                                            class="oe_stat_button" icon="fa-user"
+                                            context="{'search_default_comuna_id': active_id, 'default_comuna_id': active_id, 'group_expand': True}">
+                                        <div class="o_stat_info">
+                                            <field name="habita_count" class="o_stat_value"/>
+                                            <span class="o_stat_text">Habitantes</span>
+                                        </div>
+                                    </button>
+                                 </td>
+                         </tr>
+                                    
+                        </table>
+                    </div>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h2>
+                                <field name="name" readonly="1"/>
+                        </h2>
+                        <h2>
+                            <div class="d-flex">
+                                <field name="priority" widget="priority" class="mr-3"/>
+                                <field class="o_text_overflow" name="nombre" placeholder="Ejemplo: Negro Primero"/>
+                            </div>
+                        </h2>
+                    </div>
+
+                    <separator string="Ubicaciòn" colspan="2" />
+                    <group colspan="2" col="2">
+                        <field name="direccion_id"></field>
+                        <field name="territorio_id" readonly="1"></field>
+                   </group> 
+
+                    <separator string="Datos Geneales" colspan="2" />
+ 
+                    <group>
+                             <group>
+                                <field name="codigo_situr" /> 
+                            </group>
+                            <group>
+                                <field name="rif" /> 
+                            </group>
+                    </group>                    
+                    <group string="Observaciones">
+                        <field name="note" nolabel="1" ></field>
+                    </group>                    
+                    <notebook>
+                        <page string="CALLES" name="calle">
+                             <field name="calle_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="nombre"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="name"/>
+                                        </group>
+                                        <group>
+                                            <field name="nombre"/>
+                                        </group>
+                                    </group>
+                                </form>
+                             </field>
+                        </page>
+
+                       <page string="LÍMITES" name="limite">
+                            <group>
+                                <field name="limite_n"> </field>
+                                <field name="limite_s"> </field>
+                                <field name="limite_e"> </field>
+                                <field name="limite_o"> </field>
+                                <field name="superficie" />
+                            </group>
+
+                        </page>
+                        <page string="DATOS DEMOGRÀFICOS" name="calle">
+                            <group>
+                                <field name="calle_conta" readonly="1"> </field>
+                                <field name="casa_conta" readonly="1"> </field>
+                                <field name="familia_conta" readonly="1"> </field>
+                                <field name="habita_conta" readonly="1"> </field>
+                            </group>
+                        </page>
+                        <page string="ACCIONES DE GOBIERNO" name="accion">
+                             <field name="accion_ids" readonly="1">
+                                <tree editable="bottom">
+                                    <field name="nombre"/>
+                                    <field name="accion_id"/>
+                                    <field name="persona_id"/>
+                                    <field name="unidad_id"/>                                    
+                                    <field name="date_apertura"/>
+                                    <field name="date_cierre"/>
+                                    <field name="state" decoration-warning="state =='en estudio'" 
+                                        decoration-success="state =='aprobada'"
+                                        decoration-primary="state =='en proceso'"  
+                                        decoration-info="state =='ejecutada'" 
+                                        decoration-danger="state =='cancelada'"
+                                        widget="badge" optional="show"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="nombre"/>
+                                        </group>
+                                        <group>
+                                            <field name="accion_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="persona_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="unidad_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="date_apertura"/>
+                                        </group>
+                                        <group>
+                                            <field name="date_cierre"/>
+                                        </group>
+                                        <group>
+                                            <field name="state"/>
+                                        </group>
+                                    </group>
+                                </form>
+                             </field>
+                        </page>
+                        <page string="INTENCIÒN DE VOTO" name="intencion">
+                             <table class="table table-sm o_main_table" name="appointment">
+                                <thead>
+                                    <tr>
+                                        <th name="th_reference" class="text-left">
+                                            <span>Intenciòn</span>
+                                        </th>
+                                        <th name="th_reference" class="text-left">
+                                            <span>Cantidad Votos</span>
+                                        </th>
+                                        <th name="th_age" class="text-left">
+                                            <span>Poblaciòn</span>
+                                        </th>
+                                        <th name="th_age" class="text-left">
+                                            <span>%</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                     <tr>
+                                        <td>
+                                            DUROS
+                                        </td>
+                                        <td>
+                                            <field name="vd_count" readonly="1"> </field>
+                                        </td>
+                                        <td>
+                                             <field name="habita_conta" readonly="1"> </field>
+                                        </td>
+                                        <td>
+                                             <field name="vd_porc" readonly="1"> </field>
+                                        </td>
+                                     </tr>
+                                     <tr>
+                                        <td>
+                                           BLANDOS
+                                        </td>
+                                        <td>
+                                            <field name="vb_count" readonly="1"> </field>
+                                        </td>
+                                        <td>
+                                             <field name="habita_conta" readonly="1"> </field>
+                                        </td>
+                                        <td>
+                                             <field name="vb_porc" readonly="1"> </field>
+                                        </td>
+                                     </tr>
+                                     <tr>
+                                        <td>
+                                           OPOSITOR
+                                        </td>
+                                        <td>
+                                            <field name="vo_count" readonly="1"> </field>
+                                        </td>
+                                        <td>
+                                             <field name="habita_conta" readonly="1"> </field>
+                                        </td>
+                                        <td>
+                                             <field name="vo_porc" readonly="1"> </field>
+                                        </td>
+                                     </tr>
+                            </table>
+                        </page>
+
+                    </notebook> 
+ 
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- VISTA - GRAPH  -->
+    <record id="view_comuna_graph" model="ir.ui.view">
+         <field name="name">sala.comunidad.graph</field>
+         <field name="model">sala.comunidad</field>
+         <field name="arch" type="xml">
+            <graph string="Intenciòn de Votos">
+               <field name="nombre"/>   
+               <field name="vd_count"/> 
+            </graph>
+         </field>
+    </record>
+
+     <record id="action_sala_comunidad" model="ir.actions.act_window">
+        <field name="name">Comunidades</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sala.comunidad</field>
+        <field name="view_mode">kanban,tree,graph,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Comunidad!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_comunidad" 
+                  name="Comunidades"
+                  parent="menu_situacional_root" 
+                  action="action_sala_comunidad"
+                  sequence="2"/>
+
+</odoo>
