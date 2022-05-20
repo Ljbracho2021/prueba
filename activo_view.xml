@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_activo_tree" model="ir.ui.view">
+        <field name="name">sala.activo.tree</field>
+        <field name="model">sala.activo</field>
+        <field name="arch" type="xml">
+            <tree sample="1">
+                <field name="nombre"/>
+                <field name="territorio_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_activo_kanban" model="ir.ui.view">
+        <field name="name">sala.activo.kanban</field>
+        <field name="model">sala.activo</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <field name="id"/>
+                <field name="nombre"/>
+ 
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <ul>
+                                    <li>
+                                        Nombre: <field name="nombre"/>
+                                    </li>
+      
+                                 </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_open_accion" model="ir.actions.act_window">
+        <field name="name">Acciones de gobierno</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sala.acciong</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('activo_id','=', active_id)]</field>
+        <field name="context">{'default_activo_id': active_id}</field>        
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primer Acción de gobierno !
+            </p>
+        </field>
+    </record>
+
+    <record id="view_activo_form" model="ir.ui.view">
+        <field name="name">sala.activo.form</field>
+        <field name="model">sala.activo</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+
+
+                    <div class="oe_button_box" name="button_box">
+                        <table class="table table-sm o_main_table" name="titulo">
+                          <tr>
+                               <td class="text-left" style="color:blue;"> <span class="fa fa-lg fa-cubes"> </span> </td>
+                               <td class="text-left" style="color:gray;"> <span > <strong>ACTIVO DE GOBIERNO</strong> </span> </td>
+                               <td>
+                                    <button name="%(it_sala.action_open_accion)d" type="action"
+                                            class="oe_stat_button" icon="fa-gears"
+                                            context="{'search_default_activo_id': active_id, 'default_activo_id': active_id, 'group_expand': True}">
+                                        <div class="o_stat_info">
+                                            <field name="accion_count" class="o_stat_value"/>
+                                            <span class="o_stat_text">Acciones Gob.</span>
+                                        </div>
+                                    </button>
+                                </td>
+                          </tr>
+
+                        </table>
+                    </div>
+
+
+
+                    <field name="image" widget="image" class="oe_avatar"  />
+
+                    <div class="oe_title">
+                        <h2>
+                                <field name="name" readonly="1"/>
+                        </h2>
+                        <h2>
+                            <div class="d-flex">
+                                <field name="priority" widget="priority" class="mr-3"/>
+                                <field class="o_text_overflow" name="nombre" placeholder="Ejemplo: Cancha El campito"/>
+                            </div>
+                        </h2>
+                    </div>
+                    <group>
+                      <field name="codigo"></field>
+                    </group>                 
+                    <group>
+                      <field name="categoria_id"></field>
+                    </group>
+                    <separator string="Ubicaciòn" colspan="2" />
+                    <!-- <field name="categ_id" filter_domain="[('categ_id', 'child_of', self)]"/> -->                   
+                    <group>
+                                <field name="direccion_id" ></field>
+                                <field name="territorio_id" readonly="1"></field>
+                                <field name="calle_id"></field>                               
+                                <field name="direccion"></field>
+                    </group>                     
+                    <separator string="Georeferentaciòn" colspan="2" />
+                    <group>
+                      <field name="latlng"></field>
+                    </group>
+                    <group string="Observaciones">
+                        <field name="note" nolabel="1" ></field>
+                    </group> 
+                <notebook>
+                  <!-- Datos limites -->
+                       <page string="ACCIONES DE GOBIERNO" name="accion">
+                             <field name="accion_ids" readonly="1">
+                                <tree editable="bottom">
+                                    <field name="date_apertura"/>
+                                    <field name="date_cierre"/>
+                                    <field name="nombre"/>
+                                    <field name="accion_id"/>                                    
+ 
+                                    <field name="state" decoration-warning="state =='en estudio'" 
+                                        decoration-success="state =='aprobada'"
+                                        decoration-primary="state =='en proceso'"  
+                                        decoration-info="state =='ejecutada'" 
+                                        decoration-danger="state =='cancelada'"
+                                        widget="badge" optional="show"/>
+                                </tree>
+                                <form>
+                                        <group>
+                                          <field name="date_apertura"/>
+                                        </group>
+                                        <group>
+                                            <field name="date_cierre"/>
+                                        </group>
+
+                                        <group>
+                                            <field name="nombre"/>
+                                        </group>
+                                        <group>
+                                            <field name="accion_id"/>
+                                        </group>
+                                        <group>
+                                         <group>
+                                            <field name="state"/>
+                                        </group>
+                                    </group>
+                                </form>
+                             </field>
+                        </page>
+  
+                                                         
+                </notebook>   
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sala_activo" model="ir.actions.act_window">
+        <field name="name">Activos de Gobierno</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sala.activo</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first activo!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_activo" 
+                  name="Activos de gobierno"
+                  parent="menu_situacional_root" 
+                  action="action_sala_activo"
+                  sequence="9"/>
+
+</odoo>
